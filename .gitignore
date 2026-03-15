@@ -1,3 +1,5 @@
 /target
 *.db
 .fastembed_cache/
+# Library crates don't commit Cargo.lock (binaries do)
+Cargo.lock
