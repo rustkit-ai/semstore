@@ -10,7 +10,7 @@ documentation = "https://docs.rs/rustkit-semantic"
 keywords = ["semantic-search", "embeddings", "rag", "vector-search", "llm"]
 categories = ["database", "text-processing", "science"]
 readme = "README.md"
-rust-version = "1.70"
+rust-version = "1.85"
 
 [features]
 default = ["default-embedder", "bundled-sqlite"]

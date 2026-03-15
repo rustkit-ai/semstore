@@ -119,7 +119,12 @@ fn parse_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<Row> {
     let metadata = serde_json::from_str(&raw_meta).unwrap_or(Value::Object(Default::default()));
     let embedding = bytes_to_floats(&emb_bytes);
 
-    Ok(Row { id, content, metadata, embedding })
+    Ok(Row {
+        id,
+        content,
+        metadata,
+        embedding,
+    })
 }
 
 fn floats_to_bytes(floats: &[f32]) -> Vec<u8> {

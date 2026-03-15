@@ -12,12 +12,30 @@ fn main() -> rustkit_semantic::Result<()> {
     let mut idx = SemanticIndex::in_memory()?;
 
     idx.insert_batch([
-        ("Rust ownership prevents data races at compile time",   json!({ "lang": "rust" })),
-        ("Rust borrowing: multiple readers OR one writer",       json!({ "lang": "rust" })),
-        ("Python uses reference counting for memory management", json!({ "lang": "python" })),
-        ("Go's garbage collector runs concurrently",             json!({ "lang": "go" })),
-        ("async/await in Rust compiles to zero-cost state machines", json!({ "lang": "rust" })),
-        ("Tokio is the most popular async runtime for Rust",    json!({ "lang": "rust" })),
+        (
+            "Rust ownership prevents data races at compile time",
+            json!({ "lang": "rust" }),
+        ),
+        (
+            "Rust borrowing: multiple readers OR one writer",
+            json!({ "lang": "rust" }),
+        ),
+        (
+            "Python uses reference counting for memory management",
+            json!({ "lang": "python" }),
+        ),
+        (
+            "Go's garbage collector runs concurrently",
+            json!({ "lang": "go" }),
+        ),
+        (
+            "async/await in Rust compiles to zero-cost state machines",
+            json!({ "lang": "rust" }),
+        ),
+        (
+            "Tokio is the most popular async runtime for Rust",
+            json!({ "lang": "rust" }),
+        ),
     ])?;
 
     let stats = idx.stats()?;

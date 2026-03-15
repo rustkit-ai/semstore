@@ -52,7 +52,11 @@ pub struct Builder<E> {
 #[cfg(feature = "default-embedder")]
 impl Builder<()> {
     pub(crate) fn new_default() -> Builder<()> {
-        Builder { embedder: (), db_path: None, threshold: 0.75 }
+        Builder {
+            embedder: (),
+            db_path: None,
+            threshold: 0.75,
+        }
     }
 }
 
@@ -91,7 +95,11 @@ impl<E: Embedder + 'static> Builder<E> {
     ///
     /// Returns an error if the embedder or the store cannot be initialised.
     pub fn build(self) -> Result<SemanticIndex> {
-        build_index(Box::new(self.embedder), self.db_path.as_deref(), self.threshold)
+        build_index(
+            Box::new(self.embedder),
+            self.db_path.as_deref(),
+            self.threshold,
+        )
     }
 }
 
@@ -293,7 +301,11 @@ impl SemanticIndex {
             }
         }
 
-        results.sort_unstable_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
+        results.sort_unstable_by(|a, b| {
+            b.score
+                .partial_cmp(&a.score)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
         Ok(results)
     }
 
@@ -327,7 +339,9 @@ impl SemanticIndex {
     ///
     /// Returns an error if the store query fails.
     pub fn stats(&self) -> Result<Stats> {
-        Ok(Stats { total: self.store.count()? })
+        Ok(Stats {
+            total: self.store.count()?,
+        })
     }
 }
 
@@ -352,8 +366,10 @@ mod tests {
     #[test]
     fn insert_and_search() {
         let mut idx = idx();
-        idx.insert("Rust prevents memory errors at compile time", json!({})).unwrap();
-        idx.insert("Python is a high-level scripting language", json!({})).unwrap();
+        idx.insert("Rust prevents memory errors at compile time", json!({}))
+            .unwrap();
+        idx.insert("Python is a high-level scripting language", json!({}))
+            .unwrap();
 
         let results = idx.search("memory safety rust", 2).unwrap();
         assert!(!results.is_empty());
@@ -403,7 +419,8 @@ mod tests {
     #[test]
     fn metadata_round_trips() {
         let mut idx = idx();
-        idx.insert("some text", json!({ "source": "test.md", "page": 42 })).unwrap();
+        idx.insert("some text", json!({ "source": "test.md", "page": 42 }))
+            .unwrap();
         let results = idx.search("some text", 1).unwrap();
         assert_eq!(results[0].metadata["source"], "test.md");
         assert_eq!(results[0].metadata["page"], 42);
@@ -481,5 +498,10 @@ fn build_index(
         }
     }
 
-    Ok(SemanticIndex { embedder, index, store, threshold })
+    Ok(SemanticIndex {
+        embedder,
+        index,
+        store,
+        threshold,
+    })
 }

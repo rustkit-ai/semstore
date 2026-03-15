@@ -20,8 +20,7 @@ fn shared_model() -> Result<Arc<TextEmbedding>> {
     MODEL
         .get_or_try_init(|| {
             let model = TextEmbedding::try_new(
-                InitOptions::new(EmbeddingModel::BGESmallENV15)
-                    .with_show_download_progress(true),
+                InitOptions::new(EmbeddingModel::BGESmallENV15).with_show_download_progress(true),
             )
             .map_err(|e| Error::Embed(e.to_string()))?;
             Ok(Arc::new(model))
@@ -49,7 +48,9 @@ impl BgeEmbedder {
     ///
     /// Returns an error if the model cannot be downloaded or initialised.
     pub fn new() -> Result<Self> {
-        Ok(Self { model: shared_model()? })
+        Ok(Self {
+            model: shared_model()?,
+        })
     }
 }
 
