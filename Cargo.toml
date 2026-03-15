@@ -1,23 +1,48 @@
 [package]
 name = "rustkit-semantic"
 version = "0.1.0"
-edition = "2024"
-description = "Local semantic cache for LLM queries — reduce API costs with RAG-based query deduplication"
+edition = "2021"
+description = "Local semantic search for Rust applications — store text, search by meaning, no cloud required"
 license = "MIT"
+repository = "https://github.com/rustkit-ai/rustkit-semantic"
+homepage = "https://github.com/rustkit-ai/rustkit-semantic"
+documentation = "https://docs.rs/rustkit-semantic"
+keywords = ["semantic-search", "embeddings", "rag", "vector-search", "llm"]
+categories = ["database", "text-processing", "science"]
+readme = "README.md"
+rust-version = "1.70"
+
+[features]
+default = ["default-embedder", "bundled-sqlite"]
+# Bundles the BGE-Small ONNX embedder (~23 MB download on first use).
+# Disable this feature to bring your own embedder via the `Embedder` trait.
+default-embedder = ["dep:fastembed", "dep:once_cell"]
+# Bundles SQLite so no system library is required.
+bundled-sqlite = ["rusqlite/bundled"]
 
 [dependencies]
-fastembed = "4"
-usearch = "2"
-rusqlite = { version = "0.31", features = ["bundled"] }
-tokio = { version = "1", features = ["full"] }
-serde = { version = "1", features = ["derive"] }
+thiserror  = "1"
+rusqlite   = "0.31"
+usearch    = "2"
+serde      = { version = "1", features = ["derive"] }
 serde_json = "1"
-anyhow = "1"
 
-[lib]
-name = "rustkit_semantic"
-path = "src/lib.rs"
+# Optional — only with the `default-embedder` feature
+fastembed  = { version = "4", optional = true }
+once_cell  = { version = "1", optional = true }
 
-[[bin]]
-name = "rustkit-semantic"
-path = "src/main.rs"
+[dev-dependencies]
+serde_json = "1"
+tempfile  = "3"
+
+[[example]]
+name = "basic"
+path = "examples/basic.rs"
+
+[[example]]
+name = "rag"
+path = "examples/rag.rs"
+
+[[example]]
+name = "custom_embedder"
+path = "examples/custom_embedder.rs"
