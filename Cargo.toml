@@ -1,12 +1,12 @@
 [package]
-name = "rustkit-semantic"
+name = "semstore"
 version = "0.1.0"
 edition = "2021"
 description = "Local semantic search for Rust applications — store text, search by meaning, no cloud required"
 license = "MIT"
-repository = "https://github.com/rustkit-ai/rustkit-semantic"
-homepage = "https://github.com/rustkit-ai/rustkit-semantic"
-documentation = "https://docs.rs/rustkit-semantic"
+repository = "https://github.com/rustkit-ai/semstore"
+homepage = "https://github.com/rustkit-ai/semstore"
+documentation = "https://docs.rs/semstore"
 keywords = ["semantic-search", "embeddings", "rag", "vector-search", "llm"]
 categories = ["database", "text-processing", "science"]
 readme = "README.md"
