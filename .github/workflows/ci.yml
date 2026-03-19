@@ -17,8 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Windows is excluded: usearch v2 uses POSIX-only mmap (MAP_FAILED)
-        # and does not compile with MSVC. Track: https://github.com/unum-cloud/usearch/issues
+        # windows excluded: usearch v2 uses POSIX-only mmap (MAP_FAILED)
         os: [ubuntu-latest, macos-latest]
 
     steps:
@@ -26,52 +25,29 @@ jobs:
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
-
-      - name: Build
-        run: cargo build --all-features
-
-      - name: Test
-        run: cargo test --all-features
-
-  lint:
-    name: Clippy + fmt
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
         with:
-          components: clippy, rustfmt
+          components: rustfmt, clippy
 
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@v2
 
-      - name: Clippy
-        run: cargo clippy --all-features -- -D warnings
-
-      - name: Format
+      - name: fmt
         run: cargo fmt --check
 
+      - name: clippy
+        run: cargo clippy --all-features -- -D warnings
+
+      - name: test
+        run: cargo test --all-features
+
   msrv:
-    name: MSRV (Rust 1.88)
+    name: MSRV (1.88)
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Rust 1.88
-        uses: dtolnay/rust-toolchain@1.88
-
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
-
-      - name: Check
-        run: cargo check --all-features
+      - uses: dtolnay/rust-toolchain@1.88
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --all-features
 
   no-default-features:
     name: no-default-features
@@ -79,12 +55,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --no-default-features
 
-      - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+  audit:
+    name: Security audit
+    runs-on: ubuntu-latest
 
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install cargo-audit
+        run: cargo install cargo-audit --locked
+      - run: cargo audit
 
-      - name: Check without default features
-        run: cargo check --no-default-features
+  publish-dry-run:
+    name: Publish dry-run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo publish --dry-run
