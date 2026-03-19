@@ -4,10 +4,10 @@
 //! cargo run --example rag
 //! ```
 
-use rustkit_semantic::SemanticIndex;
+use semstore::SemanticIndex;
 use serde_json::json;
 
-fn main() -> rustkit_semantic::Result<()> {
+fn main() -> semstore::Result<()> {
     let mut idx = SemanticIndex::open("./rag_demo.db")?;
 
     // Index your docs once (skip if already populated).

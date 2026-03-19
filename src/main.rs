@@ -1,5 +1,5 @@
 fn main() {
-    eprintln!("rustkit-semantic is a library crate.");
+    eprintln!("semstore is a library crate.");
     eprintln!("Run an example instead:");
     eprintln!("  cargo run --example basic");
     eprintln!("  cargo run --example rag");

@@ -136,7 +136,7 @@ impl Builder<()> {
 /// # Quick start
 ///
 /// ```no_run
-/// use rustkit_semantic::SemanticIndex;
+/// use semstore::SemanticIndex;
 /// use serde_json::json;
 ///
 /// // Persistent index (SQLite file)
@@ -149,13 +149,13 @@ impl Builder<()> {
 /// for r in &results {
 ///     println!("[{:.2}] {}", r.score, r.content);
 /// }
-/// # Ok::<(), rustkit_semantic::Error>(())
+/// # Ok::<(), semstore::Error>(())
 /// ```
 ///
 /// # Custom embedder
 ///
 /// ```no_run
-/// use rustkit_semantic::{Embedder, Error, SemanticIndex};
+/// use semstore::{Embedder, Error, SemanticIndex};
 ///
 /// struct MyEmbedder;
 /// impl Embedder for MyEmbedder {
@@ -167,7 +167,7 @@ impl Builder<()> {
 ///     .embedder(MyEmbedder)
 ///     .path("./index.db")
 ///     .build()?;
-/// # Ok::<(), rustkit_semantic::Error>(())
+/// # Ok::<(), semstore::Error>(())
 /// ```
 pub struct SemanticIndex {
     embedder: Box<dyn Embedder>,

@@ -7,7 +7,7 @@
 //! cargo run --example custom_embedder
 //! ```
 
-use rustkit_semantic::{Embedder, Error, SemanticIndex};
+use semstore::{Embedder, Error, SemanticIndex};
 use serde_json::json;
 
 /// Toy embedder that returns random vectors — for illustration only.
@@ -38,7 +38,7 @@ impl Embedder for RandomEmbedder {
     }
 }
 
-fn main() -> rustkit_semantic::Result<()> {
+fn main() -> semstore::Result<()> {
     let embedder = RandomEmbedder { dims: 256 };
 
     let mut idx = SemanticIndex::builder()

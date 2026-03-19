@@ -18,7 +18,7 @@ pub use bge::BgeEmbedder;
 /// # Example — OpenAI-compatible embedder
 ///
 /// ```rust,no_run
-/// use rustkit_semantic::{Embedder, Error};
+/// use semstore::{Embedder, Error};
 ///
 /// struct MyEmbedder;
 ///

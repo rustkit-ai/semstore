@@ -4,10 +4,10 @@
 //! cargo run --example basic
 //! ```
 
-use rustkit_semantic::SemanticIndex;
+use semstore::SemanticIndex;
 use serde_json::json;
 
-fn main() -> rustkit_semantic::Result<()> {
+fn main() -> semstore::Result<()> {
     // In-memory index — nothing is written to disk.
     let mut idx = SemanticIndex::in_memory()?;
 

@@ -1,4 +1,4 @@
-//! # rustkit-semantic
+//! # semstore
 //!
 //! Local semantic search for Rust applications — store text, search by meaning.
 //! No cloud required. Embeddings run on-device via ONNX (BGE-Small, ~23 MB).
@@ -15,7 +15,7 @@
 //! ## Quick start
 //!
 //! ```no_run
-//! use rustkit_semantic::SemanticIndex;
+//! use semstore::SemanticIndex;
 //! use serde_json::json;
 //!
 //! let mut idx = SemanticIndex::open("./index.db")?;
@@ -29,13 +29,13 @@
 //! for r in &results {
 //!     println!("[{:.2}] {}", r.score, r.content);
 //! }
-//! # Ok::<(), rustkit_semantic::Error>(())
+//! # Ok::<(), semstore::Error>(())
 //! ```
 //!
 //! ## Custom embedder
 //!
 //! ```no_run
-//! use rustkit_semantic::{Embedder, Error, SemanticIndex};
+//! use semstore::{Embedder, Error, SemanticIndex};
 //! use serde_json::json;
 //!
 //! struct OpenAiEmbedder { /* your fields */ }
@@ -52,7 +52,7 @@
 //!     .embedder(OpenAiEmbedder { /* … */ })
 //!     .path("./index.db")
 //!     .build()?;
-//! # Ok::<(), rustkit_semantic::Error>(())
+//! # Ok::<(), semstore::Error>(())
 //! ```
 
 #![warn(missing_docs)]
