@@ -389,12 +389,14 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn empty_search_returns_nothing() {
         let idx = idx();
         assert!(idx.search("anything", 5).unwrap().is_empty());
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn insert_and_search() {
         let mut idx = idx();
         idx.insert("Rust prevents memory errors at compile time", json!({}))
@@ -409,6 +411,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn stats_tracks_inserts() {
         let mut idx = idx();
         assert_eq!(idx.stats().unwrap().total, 0);
@@ -417,6 +420,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn len_and_is_empty() {
         let mut idx = idx();
         assert!(idx.is_empty());
@@ -426,6 +430,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn remove_entry() {
         let mut idx = idx();
         let id = idx.insert("to be deleted", json!({})).unwrap();
@@ -434,6 +439,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn insert_batch() {
         let mut idx = idx();
         let ids = idx
@@ -448,6 +454,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn metadata_round_trips() {
         let mut idx = idx();
         idx.insert("some text", json!({ "source": "test.md", "page": 42 }))
@@ -458,6 +465,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn results_sorted_descending() {
         let mut idx = idx();
         idx.insert_batch([
@@ -477,6 +485,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires fastembed model download (~23 MB) — run with --ignored locally"]
     fn persistence_rebuilds_index() {
         let tmp = tempfile::NamedTempFile::new().unwrap();
         let path = tmp.path().to_owned();
