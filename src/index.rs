@@ -343,6 +343,37 @@ impl SemanticIndex {
             total: self.store.count()?,
         })
     }
+
+    /// Remove all entries inserted more than `seconds` ago.
+    ///
+    /// Returns the number of entries removed.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the store query or delete fails.
+    pub fn remove_older_than(&mut self, seconds: u64) -> Result<usize> {
+        let ids = self.store.scan_ids_older_than(seconds)?;
+        let count = ids.len();
+        for &id in &ids {
+            // Non-fatal: the vector may already have been removed
+            let _ = self.index.remove(id);
+            self.store.delete(id)?;
+        }
+        Ok(count)
+    }
+}
+
+impl SemanticIndex {
+    /// Return the number of stored entries at `path` without loading the
+    /// embedding model — useful for stats/CLI commands.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the file cannot be opened.
+    pub fn entry_count(path: &Path) -> Result<u64> {
+        let store = Store::open(path)?;
+        store.count()
+    }
 }
 
 // ── Tests ─────────────────────────────────────────────────────────────────────

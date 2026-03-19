@@ -102,6 +102,20 @@ impl Store {
         Ok(n as u64)
     }
 
+    /// Return ids of entries inserted more than `seconds` ago.
+    ///
+    /// Uses the DB-managed `inserted_at` column, not the JSON metadata.
+    pub fn scan_ids_older_than(&self, seconds: u64) -> Result<Vec<u64>> {
+        let mut stmt = self.conn.prepare(
+            "SELECT id FROM entries
+             WHERE (unixepoch('now') - unixepoch(inserted_at)) >= ?1",
+        )?;
+        let ids = stmt
+            .query_map(params![seconds as i64], |r| r.get::<_, i64>(0))?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(ids.into_iter().map(|n| n as u64).collect())
+    }
+
     fn next_id(&self) -> Result<u64> {
         let max: Option<i64> = self
             .conn
